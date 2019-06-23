@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CreditCardPayment
 {
@@ -27,37 +23,56 @@ namespace CreditCardPayment
 		{
 			int currentMonth = DateTime.Now.Month;
 			int currentYear = DateTime.Now.Year;
-			int daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+			
 			int numberOfMonths = 0; ;
 			double intRate;
 			double Balance;
+			double runningBalance = 0;
 			double DPR;
 			double monthlyInterestRate;
 			double monthlyPayment;
 			double balanceAfterIntCalc;
+			double monthlyInterestAmount;
+			double runningMonthlyInterest = 0;
+			double totalDollars = 0;
 			Console.WriteLine("What is the interest rate of the credit card:");
 			intRate = double.Parse(Console.ReadLine());
 			Console.WriteLine("\nWhat is the balance of the credit card:");
 			Balance = double.Parse(Console.ReadLine());
 			Console.WriteLine("\nHow much are you paying per month:");
 			monthlyPayment = double.Parse(Console.ReadLine());
+			runningBalance = Balance;
 
 			DPR = intRate / 365;
-			monthlyInterestRate = DPR * daysInMonth;
-			Console.WriteLine("\nMonth\t\tBalance\t\tDays In Billing Cylce");
+			
+			Console.WriteLine("\nMonth\t\tBalance\t\tInterest For The Month\t\tDays In Billing Cylce");
+			Console.WriteLine("-------------------------------------------------------------------------------");
 
 			do
 			{
+				int daysInMonth = DateTime.DaysInMonth(currentYear, currentMonth);
+				monthlyInterestRate = DPR * daysInMonth;
 				balanceAfterIntCalc = (Balance * (monthlyInterestRate / 100)) + Balance;
+				double monthlyInterestAmountN = Balance * (monthlyInterestRate / 100);
+				monthlyInterestAmount = Math.Round(monthlyInterestAmountN, 2);
 				Balance = balanceAfterIntCalc - monthlyPayment;
 				numberOfMonths++;
 				double roundedBalance = Math.Round(Balance, 2);
+				runningMonthlyInterest += monthlyInterestAmount;
 
-				Console.WriteLine($"{numberOfMonths}\t\t{roundedBalance}\t\t{daysInMonth}");
+				Console.WriteLine($"{currentMonth}\t\t{roundedBalance}\t\t{monthlyInterestAmount}\t\t\t\t{daysInMonth}");
+				currentMonth++;
+				if (currentMonth > 12)
+				{
+					currentMonth = 1;
+				}
+				//Console.WriteLine($"{numberOfMonths}\t\t{roundedBalance}\t\t{daysInMonth}");
+				totalDollars = runningBalance + runningMonthlyInterest;
 			}
 			while (Balance > 0);
 
-			Console.WriteLine($"\nPaying {monthlyPayment} at {intRate} % it will take {numberOfMonths} months to pay off the credit card balance");
+			Console.WriteLine($"\nPaying {monthlyPayment} at {intRate}% it will take {numberOfMonths} months to pay off the credit card balance " +
+				$"will end up paying at total of {Math.Round(totalDollars,2)}");
 		}
 	}
 }
