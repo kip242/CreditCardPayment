@@ -9,9 +9,19 @@ namespace CreditCardPayment
 			string carryOn = string.Empty;
 			do
 			{
-				DoWork();
-				Console.WriteLine("\nWould you like to make another calculation(Y/N)?");
-				carryOn = Console.ReadLine();
+				Console.WriteLine("What would you like to do today\n" +
+					"1. Run how long it will take to pay of a credit card\n" +
+					"2. Run payoff all credit card scenario");
+				string choice = Console.ReadLine();
+
+				if (choice == "1")
+				{
+					DoWork();
+					Console.WriteLine("\nWould you like to make another calculation(Y/N)?");
+					carryOn = Console.ReadLine();
+				}
+				else
+					AllCardPayoff();
 			}
 			while (carryOn != "y" || carryOn != "Y");
 
@@ -73,6 +83,11 @@ namespace CreditCardPayment
 
 			Console.WriteLine($"\nPaying {monthlyPayment} at {intRate}% it will take {numberOfMonths} months to pay off the credit card balance " +
 				$"will end up paying at total of {Math.Round(totalDollars,2)}");
+		}
+
+		private static void AllCardPayoff()
+		{
+			
 		}
 	}
 }
