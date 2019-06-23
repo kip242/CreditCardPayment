@@ -23,7 +23,7 @@ namespace CreditCardPayment
 			Console.ReadKey();
 		}
 
-		public static void DoWork()
+		private static void DoWork()
 		{
 			int currentMonth = DateTime.Now.Month;
 			int currentYear = DateTime.Now.Year;
