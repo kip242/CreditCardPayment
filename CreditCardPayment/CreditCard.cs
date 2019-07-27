@@ -8,8 +8,11 @@ namespace CreditCardPayment
 {
 	public class CreditCard
 	{
-		decimal Balance { get; set; }
-		decimal IntRate { get; set; }
-		int MonthlyPayment { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
+		public decimal Balance { get; set; }
+		public decimal IntRate { get; set; }
+		public int MonthlyPayment { get; set; }
+		public int MonthlyCharges { get; set; }
 	}
 }
